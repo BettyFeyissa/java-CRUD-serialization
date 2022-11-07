@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 // This defines a topic to be on the study guide
-public class Topic {
+public class Topic implements Serializable {
     // create class attributes
     private String name;
     private String description;
