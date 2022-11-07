@@ -39,20 +39,28 @@ public class Menu {
             java.deleteTopic();
 
         }else if (option.equalsIgnoreCase("Q")){
-            System.out.println("Goodbye! ");
-            System.exit(0);
+            System.out.println("Do you want to save before quitting? (yes/no)");
+            option = scan.nextLine();
+            if(option.equalsIgnoreCase("yes")) {
+                java.saveData();
+                System.exit(0);
+            }
+            else {
+                System.out.println("Goodbye! ");
+                System.exit(0);
+            }
         }
         else
             System.out.println("\nPlease enter proper input! \n");
         presentMenu();
+
     }
 
     public static void main(String[] args) {
 
         // print a welcome menu for the user
         //step 1: define the message for the user
-        String welcome = "Welcome to Java Class\n";
-
+        String welcome = "Welcome to Java Class";
         // step 2: print message for the user
         System.out.println(welcome);
 
