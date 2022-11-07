@@ -1,9 +1,36 @@
+import java.io.Serializable;
+
 // This defines a topic to be on the study guide
 public class Topic {
     // create class attributes
-    String name;
-    String description;
-    String listoftask;
+    private String name;
+    private String description;
+    private String listoftask;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getListoftask() {
+        return listoftask;
+    }
+
+    public void setListoftask(String listoftask) {
+        this.listoftask = listoftask;
+    }
+
     // create constructor method
     public Topic(String name,String description,String listoftask) {
         this.name = name;
