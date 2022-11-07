@@ -67,6 +67,7 @@ public class Menu {
         // print a welcome menu for the user
         //step 1: define the message for the user
         String welcome = "Welcome to Java Class";
+        loadSavedData();
         // step 2: print message for the user
         System.out.println(welcome);
 
