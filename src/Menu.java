@@ -10,6 +10,12 @@ public class Menu {
     //storing the users input
     static String option = "";
 
+    static void loadSavedData(){
+        System.out.println("Do you want to load the data first? (yes/no)");
+        option = scan.nextLine();
+        if(option.equalsIgnoreCase("yes/no"))
+            java.loadData();
+    }
     static void presentMenu(){
         // print options for the user to select
         //step 1: define the message for the options
