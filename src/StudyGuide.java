@@ -123,12 +123,11 @@ public class StudyGuide {
         }catch (ClassNotFoundException c){
             c.printStackTrace();
         }
-
     }
 
     public static void loadData(){
-// we need to read from the file object.ser the data for our topic
-// and if possible create a new employee otherwise return null
+    // we need to read from the file object.ser the data for our topic
+    // and if possible create a new employee otherwise return null
 
         ArrayList <Topic> topics = new ArrayList<>(); // this create an object of type topic to receive data from file or return
 
@@ -141,7 +140,7 @@ public class StudyGuide {
 
             // method for deserialization for an object
             topics = (ArrayList<Topic>) in.readObject();
-            // ^ read object and convert data to type Employee
+            // read object and convert data to type Employee
 
             in.close();
             file.close();
@@ -174,7 +173,5 @@ public class StudyGuide {
             i.printStackTrace();
             // history of all the methods that were called - allows us to see where the code went wrong.
         }
-
     }
-
 }
