@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -10,13 +11,14 @@ public class Menu {
     //storing the users input
     static String option = "";
 
-    static void loadSavedData(){
+    static void loadSavedData() {
         System.out.println("Do you want to load the data first? (yes/no)");
         option = scan.nextLine();
-        if(option.equalsIgnoreCase("yes/no"))
+        if (option.equalsIgnoreCase("yes"))
             java.loadData();
     }
-    static void presentMenu(){
+
+    static void presentMenu() {
         // print options for the user to select
         //step 1: define the message for the options
         String optionsMessage = "\nType C to create a new topic \n" + "Type R to read all topics \n" + "Type U to update a topic \n" + "Type D to delete a topic \n" + "Type Q to quit \n";
@@ -32,31 +34,29 @@ public class Menu {
         if (option.equalsIgnoreCase("C")) {
             java.createTopics();
 
-        } else if (option.equalsIgnoreCase("R")){
+        } else if (option.equalsIgnoreCase("R")) {
             // print the products
             java.printTopics();
 
-        }else if (option.equalsIgnoreCase("U")){
+        } else if (option.equalsIgnoreCase("U")) {
             System.out.println("Should update ");
             java.updateTopic();
 
-        }else if (option.equalsIgnoreCase("D")){
+        } else if (option.equalsIgnoreCase("D")) {
             System.out.println("Should delete ");
             java.deleteTopic();
 
-        }else if (option.equalsIgnoreCase("Q")){
+        } else if (option.equalsIgnoreCase("Q")) {
             System.out.println("Do you want to save before quitting? (yes/no)");
             option = scan.nextLine();
-            if(option.equalsIgnoreCase("yes")) {
-                java.saveData();
+            if (option.equalsIgnoreCase("yes")) {
+                //java.saveData();
                 System.exit(0);
-            }
-            else {
+            } else {
                 System.out.println("Goodbye! ");
                 System.exit(0);
             }
-        }
-        else
+        } else
             System.out.println("\nPlease enter proper input! \n");
         presentMenu();
 
@@ -66,13 +66,18 @@ public class Menu {
 
         // print a welcome menu for the user
         //step 1: define the message for the user
+        StudyGuide newStudyGuide = new StudyGuide();
         String welcome = "Welcome to Java Class";
         loadSavedData();
+
+        presentMenu();
         // step 2: print message for the user
         System.out.println(welcome);
 
+
         //step 3: create loop for the program menu
-        while(option.equalsIgnoreCase("Q") == false)
+        while (option.equalsIgnoreCase("Q") == false)
             presentMenu();
+
     }
 }

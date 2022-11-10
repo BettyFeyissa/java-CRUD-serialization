@@ -1,25 +1,51 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;
 
 public class StudyGuide {
     ArrayList<Topic> topics;
+
     Scanner scan = new Scanner(System.in);
-    public StudyGuide(){
+
+    private static HashMap<String, String>
+    convertArrayListToHashMap(ArrayList<Topic> arrayList)
+    {
+
+        LinkedHashMap<String, String> linkedHashMap
+                = new LinkedHashMap<>();
+
+        for (Topic top : arrayList) {
+            linkedHashMap.put("Topic Name", top.getName());
+            linkedHashMap.put("Topic Description", top.getDescription());
+            linkedHashMap.put("List of Task", top.getListoftask());
+        }
+        return linkedHashMap;
+    }
+    public StudyGuide() {
         //initialization an empty array
         this.topics = new ArrayList<Topic>();
     }
 
     //instance method to print
-    public void printTopics(){
+    public void printTopics() {
         System.out.println("Here are the list of topics");
-        for(Topic topic : this.topics){
-            topic.print();
+        //for (Topic topic : this.topics) {
+          //  topic.print();
+            //}
+        HashMap<String, String> hashTopics= convertArrayListToHashMap(this.topics);
+        for (Map.Entry<String, String> entry :
+                hashTopics.entrySet()) {
+
+            System.out.println(entry.getKey() + " : "
+                    + entry.getValue());
+            //print the topics
+            //this.printTopics();
         }
     }
 
+
     //instance method to create topics
-    public void createTopics(){
+    public void createTopics() {
+        Scanner scan = new Scanner(System.in);
         System.out.println("What is the name of the topic you want to study?");
         String name = scan.nextLine();
         System.out.println("What is the description of the topic?");
@@ -28,17 +54,28 @@ public class StudyGuide {
         String listoftasks = scan.nextLine();
 
         //create a new instance of Topic class
-        Topic topic = new Topic(name,description,listoftasks);
+        Topic topic = new Topic(name, description, listoftasks);
 
         //add the new topic to the arraylist
         this.topics.add(topic);
+        saveData(topics);
 
-        //print the topics
-        this.printTopics();
+       /* HashMap<String, String> hashTopics= convertArrayListToHashMap(topics);
+        for (Map.Entry<String, String> entry :
+                hashTopics.entrySet()) {
+
+            System.out.println(entry.getKey() + " : "
+                    + entry.getValue());
+            //print the topics
+            //this.printTopics();
+        }*/
+
     }
 
     //instance method to update a topic
     public void updateTopic() {
+        Scanner scan = new Scanner(System.in);
+        loadData();
         this.printTopics();
         System.out.println("What is the name of the topic you want to update? ");
         String name = scan.nextLine();
@@ -57,15 +94,17 @@ public class StudyGuide {
             }
         }
     }
+
     //instance method to delete topic
-    public void deleteTopic(){
+    public void deleteTopic() {
+        Scanner scan = new Scanner(System.in);
         this.printTopics();
         System.out.println("what is the name of the topic you want to delete? ");
         String name = scan.nextLine();
         Topic topicToDelete;
         //step 1: find the item
-        for (Topic t:this.topics) {
-            if(t.getName().equalsIgnoreCase(name)) {
+        for (Topic t : this.topics) {
+            if (t.getName().equalsIgnoreCase(name)) {
                 //delete this topic
                 topicToDelete = t;
                 this.topics.remove(topicToDelete);
@@ -74,10 +113,10 @@ public class StudyGuide {
         }
     }
 
-    public static void saveData(){
-        ArrayList <Topic> topics = new ArrayList<>();
+    public static void saveData(ArrayList <Topic> topics) {
+        //ArrayList<Topic> topics = new ArrayList<>();
         // Serialization
-        try{
+        try {
             FileOutputStream fileOut = new FileOutputStream("topics.ser");
             // ^ opening a connect to a new file and allowing to connect
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -90,46 +129,18 @@ public class StudyGuide {
             // close it once we are done with the file
             System.out.println("Serialized data is saved!");
 
-        }catch (IOException i) {
+        } catch (IOException i) {
             i.printStackTrace();
             // history of all the methods that were called - allows us to see where the code went wrong.
             //principle of a stack is similar to pringles - last in, first out
         }
-
-        //Deserialization
-
-        // we need to read from the file object.ser the data for our topic
-        // and if possible create a new topic otherwise return null
-
-        try {
-            // read object from a file
-            FileInputStream file = new FileInputStream("topics.ser");
-            // create a connect to a file
-            ObjectInputStream in = new ObjectInputStream(file);
-
-            // method for deserialization for an object
-            topics = (ArrayList<Topic>) in.readObject();
-            // ^ read object and convert data to type Employee
-
-            in.close();
-            file.close();
-
-            System.out.println("Object has been deserialized");
-            System.out.println(topics.size());
-
-        } catch (IOException i){
-            i.printStackTrace();
-
-        }catch (ClassNotFoundException c){
-            c.printStackTrace();
-        }
     }
 
-    public static void loadData(){
-    // we need to read from the file object.ser the data for our topic
-    // and if possible create a new employee otherwise return null
+    public static void loadData() {
+        // we need to read from the file object.ser the data for our topic
+        // and if possible create a new employee otherwise return null
 
-        ArrayList <Topic> topics = new ArrayList<>(); // this create an object of type topic to receive data from file or return
+        ArrayList<Topic> topics = new ArrayList<>(); // this create an object of type topic to receive data from file or return
 
         //Deserialization
         try {
@@ -139,8 +150,8 @@ public class StudyGuide {
             ObjectInputStream in = new ObjectInputStream(file);
 
             // method for deserialization for an object
-            topics = (ArrayList<Topic>) in.readObject();
-            // read object and convert data to type Employee
+            topics = (ArrayList<Topic>)in.readObject();
+            // read object and convert data to type Topic
 
             in.close();
             file.close();
@@ -148,30 +159,14 @@ public class StudyGuide {
             System.out.println("Object has been deserialized");
             System.out.println(topics.size());
 
-        } catch (IOException i){
+            for (Topic t : topics)
+                t.print();
+
+        } catch (IOException i) {
             i.printStackTrace();
 
-        }catch (ClassNotFoundException c){
+        } catch (ClassNotFoundException c) {
             c.printStackTrace();
-        }
-
-        // Serialization
-        try{
-            FileOutputStream fileOut = new FileOutputStream("topics.ser");
-            // ^ opening a connect to a new file and allowing to connect
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            // ^ streaming data from an object into a file
-            out.writeObject(topics);
-            // take this object and i'm lobbing it
-            out.close();
-            // close it once we are done with the file
-            fileOut.close();
-            // close it once we are done with the file
-            System.out.println("Serialized data is saved!");
-
-        }catch (IOException i) {
-            i.printStackTrace();
-            // history of all the methods that were called - allows us to see where the code went wrong.
         }
     }
 }

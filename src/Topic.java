@@ -40,7 +40,7 @@ public class Topic implements Serializable {
 
     // create instance method to print in well formatted way
     public void print(){
-        System.out.println("Topic Name: " + this.name + "\nTopic Description: " + this.description + "\nList of Tasks: " + this.listoftask);
+        System.out.println("\nTopic Name: " + this.name + "\nTopic Description: " + this.description + "\nList of Tasks: " + this.listoftask);
     }
 
     // this define a method that allows for a user to add a new task to the list of tasks
