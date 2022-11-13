@@ -17,6 +17,10 @@ public class StudyGuide {
             linkedHashMap.put("Topic Name", top.getName());
             linkedHashMap.put("Topic Description", top.getDescription());
             linkedHashMap.put("List of Task", top.getListoftask());
+            linkedHashMap.keySet();
+            linkedHashMap.values();
+
+            // key should be unique
         }
         return linkedHashMap;
     }
